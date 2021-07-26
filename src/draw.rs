@@ -1,7 +1,9 @@
-use piston_window::{rectangle, Context, G2d};
+use piston_window::{Glyphs, Transformed, rectangle, Context, G2d};
+use piston_window::text::*;
 use piston_window::types::Color;
 
 const BLOCK_SIZE: f64 = 25.0;
+const TEXT_COLOR: Color = [0.0, 1.0, 0.0, 1.0];
 
 pub fn to_coord(game_coord: i32) -> f64 {
     (game_coord as f64) * BLOCK_SIZE
@@ -41,4 +43,14 @@ pub fn draw_rectangle(
         con.transform,
         g,
     );
+}
+
+pub fn draw_text(text: String, glyph: &mut Glyphs, c: &Context, g: &mut G2d) {
+    let transform = c.transform.trans(10.0, 100.0);
+
+    println!("{}", text);
+
+    Text::new_color(TEXT_COLOR, 32)
+        .draw(&text, glyph, &c.draw_state, transform, g)
+        .unwrap();
 }
