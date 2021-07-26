@@ -45,12 +45,12 @@ pub fn draw_rectangle(
     );
 }
 
-pub fn draw_text(text: String, glyph: &mut Glyphs, c: &Context, g: &mut G2d) {
-    let transform = c.transform.trans(10.0, 100.0);
+pub fn draw_text(text: &str, glyph: &mut Glyphs, c: &Context, g: &mut G2d) {
+    let transform = c.transform.trans(10.0, 32.0);
 
     println!("{}", text);
 
     Text::new_color(TEXT_COLOR, 32)
-        .draw(&text, glyph, &c.draw_state, transform, g)
+        .draw(text, glyph, &c.draw_state, transform, g)
         .unwrap();
 }

@@ -79,7 +79,9 @@ impl Game {
         draw_rectangle(BORDER_COLOR, 0, 0, 1, self.height, con, g);
         draw_rectangle(BORDER_COLOR, self.width - 1, 0, 1, self.height, con, g);
 
-        draw_text(self.get_score(), glyph, con, g);
+        let score = &self.get_score() as &str;
+
+        draw_text(score, glyph, con, g);
 
         if self.game_over {
             draw_rectangle(GAMEOVER_COLOR, 0, 0, self.width, self.height, con, g);

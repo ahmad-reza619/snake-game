@@ -21,7 +21,7 @@ fn main() {
     let mut window: PistonWindow = WindowSettings::new(
         "Snake", 
         [to_coord_u32(width), to_coord_u32(height)],
-    ).exit_on_esc(true)
+    ).exit_on_esc(false)
         .build()
         .unwrap();
 
@@ -38,9 +38,10 @@ fn main() {
             game.key_pressed(key);
         }
 
-        window.draw_2d(&event, |c, g, _d| {
+        window.draw_2d(&event, |c, g, d| {
             clear(BACK_COLOR, g);
             game.draw(&c, g, &mut glyphs);
+            glyphs.factory.encoder.flush(d);
         });
 
         event.update(|arg| {
