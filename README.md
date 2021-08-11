@@ -3,7 +3,7 @@
 A simple learning project for me. Feel free to clone download and try
 
 ### How to download?
-Go over to release page and download the executable for your machine (currently only tested on windows)
+Go over to [release](https://github.com/ahmad-reza619/snake-game/releases) page and download the executable for your machine (currently only tested on windows)
 
 ### How to contribute
 
