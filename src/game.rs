@@ -4,7 +4,7 @@ use piston_window::types::Color;
 use rand::{thread_rng, Rng};
 
 use crate::snake::{Direction, Snake};
-use crate::draw::{draw_block, draw_rectangle};
+use crate::draw::{draw_block, draw_rectangle, draw_text};
 
 const FOOD_COLOR: Color = [0.80, 0.00, 0.00, 1.0];
 const BORDER_COLOR: Color = [0.00, 0.00, 0.00, 1.0];
@@ -25,6 +25,7 @@ pub struct Game {
 
     game_over: bool,
     waiting_time: f64,
+    score: u64,
 }
 
 impl Game {
@@ -38,6 +39,7 @@ impl Game {
             width,
             height,
             game_over: false,
+            score: 0,
         }
     }
 
@@ -61,7 +63,11 @@ impl Game {
         self.update_snake(dir);
     }
 
-    pub fn draw(&self, con: &Context, g: &mut G2d) {
+    fn get_score(&self) -> String {
+        format!("Score: {}", self.score)
+    }
+
+    pub fn draw(&self, con: &Context, g: &mut G2d, glyph: &mut Glyphs) {
         self.snake.draw(con, g);
 
         if self.food_exist {
@@ -72,6 +78,10 @@ impl Game {
         draw_rectangle(BORDER_COLOR, 0, self.height - 1, self.width, 1, con, g);
         draw_rectangle(BORDER_COLOR, 0, 0, 1, self.height, con, g);
         draw_rectangle(BORDER_COLOR, self.width - 1, 0, 1, self.height, con, g);
+
+        let score = &self.get_score() as &str;
+
+        draw_text(score, glyph, con, g);
 
         if self.game_over {
             draw_rectangle(GAMEOVER_COLOR, 0, 0, self.width, self.height, con, g);
@@ -100,6 +110,7 @@ impl Game {
     fn check_eating(&mut self) {
         let (head_x, head_y) = self.snake.head_position();
         if self.food_exist && self.food_x == head_x && self.food_y == head_y {
+            self.score += 1;
             self.food_exist = false;
             self.snake.restore_tail();
         }
@@ -149,5 +160,6 @@ impl Game {
         self.food_x = 6;
         self.food_y = 4;
         self.game_over = false;
+        self.score = 0;
     }
 }
